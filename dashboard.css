@@ -1,0 +1,963 @@
+/* ==========================================================================
+   Monad Design System — Dashboard & Core Stylesheet
+   Palette: Parchment (#f6f3f1), Lake Blue (#2b59d1), Periwinkle Mist (#cfdaf5),
+            Ash (#cecac8), Ink (#000000), Off-Black (#242424), Graphite (#4e4d4d)
+   Typography: Untitled Serif / Playfair Display (Headlines) & ABC Diatype Mono / JetBrains Mono (Body/UI)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@300;400;500;600&display=swap');
+
+:root {
+  /* Monad Exact Color Tokens */
+  --color-parchment: #f6f3f1;
+  --color-lake-blue: #2b59d1;
+  --color-periwinkle-mist: #cfdaf5;
+  --color-sky-blue: #a0b5eb;
+  --color-mint: #a7fccd;
+  --color-coral: #ff9473;
+  --color-gold: #ecda98;
+  --color-crimson: #f37a0a;
+
+  --color-ink: #000000;
+  --color-off-black: #242424;
+  --color-graphite: #4e4d4d;
+  --color-smoke: #797776;
+  --color-ash: #cecac8;
+  --color-white: #ffffff;
+
+  /* Mapped UI Tokens */
+  --bg-primary: #f6f3f1;
+  --bg-surface: #ffffff;
+  --bg-card: #ffffff;
+  --border-color: #cecac8;
+  --border-focus: #2b59d1;
+  --text-primary: #242424;
+  --text-secondary: #4e4d4d;
+  --text-muted: #797776;
+  --accent: #2b59d1;
+  --accent-periwinkle: #cfdaf5;
+
+  --font-serif: 'Playfair Display', 'Untitled Serif', Georgia, serif;
+  --font-mono: 'JetBrains Mono', 'ABC Diatype Mono', 'Space Mono', monospace;
+  --font-family: var(--font-mono);
+
+  --radius-pills: 999px;
+  --radius-cards: 16px;
+  --radius-tabs: 999px;
+  --radius-buttons: 999px;
+  --radius-small-buttons: 8px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background-color: var(--color-parchment);
+  color: var(--color-off-black);
+  font-family: var(--font-mono);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ==========================================================================
+   Typography — Monad Voice (Editorial Serif Headlines + Mono UI)
+   ========================================================================== */
+
+h1, h2, h3, h4, .font-serif, .heading-display, .heading-lg, .heading-sm {
+  font-family: var(--font-serif);
+  font-weight: 400; /* Monad rule: Headlines carry weight 400 — never bold */
+  color: var(--color-off-black);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.heading-display {
+  font-size: 56px;
+  line-height: 1.05;
+}
+
+.heading-lg {
+  font-size: 44px;
+  line-height: 1.15;
+}
+
+.heading-sm {
+  font-size: 26px;
+  line-height: 1.25;
+}
+
+.body-text, p, span, button, input, select, textarea {
+  font-family: var(--font-mono);
+}
+
+.body-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-graphite);
+}
+
+.stone-text, .caption {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--color-smoke);
+}
+
+/* Links — Lake Blue (#2b59d1) */
+a, a.blue-link, .blue-link {
+  color: var(--color-lake-blue);
+  text-decoration: none;
+  transition: opacity 0.2s ease, text-decoration 0.2s ease;
+  cursor: pointer;
+}
+
+a:hover, a.blue-link:hover, .blue-link:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   Buttons — Monad Pill Aesthetics (Lake Blue & Parchment Fills)
+   ========================================================================== */
+
+/* Primary Action Button — Lake Blue (#2b59d1) */
+.btn-primary, .btn-lake-blue {
+  background-color: var(--color-lake-blue);
+  color: var(--color-white);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 14px;
+  height: 44px;
+  padding: 0 24px;
+  border-radius: var(--radius-buttons);
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-primary:hover, .btn-lake-blue:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+/* Secondary Outlined Button — Parchment fill with Ash border */
+.btn-secondary, .btn-outlined-ash {
+  background-color: var(--color-parchment);
+  color: var(--color-off-black);
+  font-family: var(--font-mono);
+  border: 1px solid var(--color-ash);
+  border-radius: var(--radius-buttons);
+  padding: 8px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background 0.2s ease, opacity 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-secondary:hover, .btn-outlined-ash:hover {
+  background-color: var(--color-periwinkle-mist);
+}
+
+/* Ghost Button */
+.btn-ghost {
+  background: transparent;
+  color: var(--color-off-black);
+  font-family: var(--font-mono);
+  border: none;
+  font-size: 14px;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+
+.btn-ghost:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   Header & Navigation
+   ========================================================================== */
+
+.dashboard-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(246, 243, 241, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-ash);
+  height: 64px;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-text h1 {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--color-off-black);
+}
+
+.nav-tabs {
+  display: flex;
+  gap: 8px;
+  background: var(--color-parchment);
+  padding: 4px;
+  border-radius: var(--radius-pills);
+  border: 1px solid var(--color-ash);
+}
+
+.nav-tab {
+  background: transparent;
+  border: none;
+  padding: 6px 20px;
+  font-size: 13px;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--color-graphite);
+  border-radius: var(--radius-pills);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-tab.active, .nav-tab.active-tab {
+  background: var(--color-lake-blue);
+  color: var(--color-white);
+}
+
+/* ==========================================================================
+   App Container & Suite Section
+   ========================================================================== */
+
+.dashboard-app {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active, .tab-content.active-tab {
+  display: block !important;
+}
+
+/* Suite Pill Tabs */
+.suite-tabs-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  background: var(--color-parchment);
+  border: 1px solid var(--color-ash);
+  border-radius: var(--radius-pills);
+  padding: 4px;
+  margin: 0 auto 32px auto;
+  max-width: 440px;
+}
+
+.suite-tab-btn {
+  padding: 10px 20px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-pills);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-graphite);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.suite-tab-btn.active {
+  background: var(--color-lake-blue);
+  color: var(--color-white);
+}
+
+/* Search Card / Controls inside Elevated Cards */
+.search-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-ash);
+  border-radius: var(--radius-cards);
+  padding: 32px;
+  margin-bottom: 32px;
+}
+
+.search-mode-tabs {
+  background: var(--color-parchment) !important;
+  border: 1px solid var(--color-ash) !important;
+  border-radius: var(--radius-pills) !important;
+}
+
+.s-mode-btn {
+  color: var(--color-smoke) !important;
+  font-family: var(--font-mono) !important;
+}
+
+.s-mode-btn.active {
+  color: var(--color-off-black) !important;
+  font-weight: 600 !important;
+}
+
+#unified-search-input {
+  background: var(--color-parchment) !important;
+  color: var(--color-off-black) !important;
+  border: 1px solid var(--color-ash) !important;
+  font-family: var(--font-mono) !important;
+}
+
+#location-picker-btn, #location-picker-display {
+  background: var(--color-parchment) !important;
+  color: #000000 !important;
+  border: 1px solid var(--color-ash) !important;
+  font-family: var(--font-mono) !important;
+  font-weight: 600 !important;
+}
+
+#location-picker-popup {
+  background: var(--color-white) !important;
+  color: #000000 !important;
+  border: 1px solid var(--color-ash) !important;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12) !important;
+}
+
+.sugg-btn {
+  background: var(--color-parchment);
+  color: var(--color-graphite);
+  border: 1px solid var(--color-ash);
+  padding: 4px 14px;
+  border-radius: var(--radius-pills);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sugg-btn:hover {
+  background: var(--color-periwinkle-mist);
+  color: var(--color-lake-blue);
+}
+
+/* Category Pills */
+.cat-pill {
+  background: var(--color-white);
+  color: var(--color-graphite);
+  border: 1px solid var(--color-ash);
+  padding: 6px 18px;
+  border-radius: var(--radius-pills);
+  font-size: 13px;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cat-pill.active {
+  background: var(--color-lake-blue);
+  color: var(--color-white);
+  border-color: var(--color-lake-blue);
+}
+
+/* Discovered Opportunity Cards */
+.lead-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-ash);
+  border-radius: var(--radius-cards);
+  padding: 24px;
+  margin-bottom: 16px;
+  transition: border-color 0.2s ease;
+}
+
+.lead-card:hover {
+  border-color: var(--color-lake-blue);
+}
+
+.lead-title {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--color-off-black);
+  margin-bottom: 8px;
+}
+
+.lead-snippet {
+  font-size: 14px;
+  color: var(--color-graphite);
+  line-height: 1.6;
+}
+
+/* Metrics Row Card */
+.metrics-row-card {
+  background: var(--color-white) !important;
+  border: 1px solid var(--color-ash) !important;
+  border-radius: var(--radius-cards) !important;
+}
+
+.metrics-row-card span[id] {
+  color: var(--color-lake-blue) !important;
+  font-weight: 600 !important;
+  font-family: var(--font-mono) !important;
+}
+
+/* ==========================================================================
+   Monad Periwinkle & Dark Storytelling Band (#cfdaf5 ground)
+   ========================================================================== */
+
+.dark-feature-band {
+  background-color: var(--color-periwinkle-mist);
+  color: var(--color-off-black);
+  padding: 80px 40px;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  box-sizing: border-box;
+  margin-top: 48px;
+  margin-bottom: 48px;
+  border-top: 1px solid var(--color-ash);
+  border-bottom: 1px solid var(--color-ash);
+}
+
+.dark-feature-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.dark-feature-art {
+  position: relative;
+  height: 280px;
+}
+
+.dark-feature-art .art-card {
+  position: absolute;
+  background: var(--color-white);
+  border: 1px solid var(--color-ash);
+  border-radius: 16px;
+  padding: 20px;
+  color: var(--color-off-black);
+}
+
+.art-card.art-1 { top: 0; left: 0; width: 280px; }
+.art-card.art-2 { bottom: 0; right: 20px; width: 260px; }
+
+.dark-feature-content h2 {
+  font-family: var(--font-serif);
+  font-size: 40px;
+  line-height: 1.15;
+  font-weight: 400;
+  color: var(--color-off-black) !important;
+  margin-bottom: 16px;
+}
+
+.dark-feature-content p {
+  color: var(--color-graphite);
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.btn-dark-outlined {
+  background: var(--color-lake-blue);
+  color: var(--color-white);
+  border: none;
+  padding: 10px 24px;
+  border-radius: var(--radius-pills);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.btn-dark-outlined:hover {
+  opacity: 0.92;
+}
+
+/* ==========================================================================
+   Monad Full-Bleed Site Footer (#000000 Ink ground)
+   ========================================================================== */
+
+.site-footer {
+  background-color: var(--color-ink);
+  color: var(--color-white);
+  padding: 64px 40px;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  box-sizing: border-box;
+}
+
+.footer-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr repeat(4, 1fr);
+  gap: 40px;
+}
+
+.footer-brand h3 {
+  font-family: var(--font-serif);
+  color: var(--color-white) !important;
+  font-weight: 400;
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+.footer-brand p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px;
+  max-width: 280px;
+  line-height: 1.6;
+}
+
+.footer-col h4 {
+  color: var(--color-white) !important;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+}
+
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-col ul li {
+  margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 13px;
+  transition: color 0.2s ease;
+}
+
+.footer-col ul li a:hover {
+  color: var(--color-white);
+}
+
+/* ==========================================================================
+   Monad Data Pipeline Flow Diagram & Distribution Funnel Component
+   ========================================================================== */
+
+.monad-pipeline-container {
+  background: var(--color-white);
+  border: 1px solid var(--color-ash);
+  border-radius: var(--radius-cards);
+  padding: 36px 40px;
+  margin: 32px auto;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.02);
+}
+
+.funnel-svg-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes flowDash {
+  0% {
+    stroke-dashoffset: 20;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.monad-pipeline-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(circle, rgba(167, 252, 205, 0.45) 0%, rgba(160, 181, 235, 0.3) 45%, transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.monad-pipeline-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.pipeline-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.pipeline-stage-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-smoke);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pipeline-node {
+  background: var(--color-parchment);
+  border: 1px solid var(--color-ash);
+  border-radius: 9999px;
+  padding: 12px 20px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--color-off-black);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  position: relative;
+  z-index: 2;
+}
+
+.pipeline-node:hover, .pipeline-node.active-node {
+  border-color: var(--color-lake-blue);
+  background: var(--color-periwinkle-mist);
+  color: var(--color-lake-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(43, 89, 209, 0.12);
+}
+
+.pipeline-node-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--color-white);
+  border: 1px solid var(--color-ash);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.pipeline-hub-card {
+  background: var(--color-periwinkle-mist);
+  border: 1px solid var(--color-ash);
+  border-radius: 24px;
+  padding: 28px 24px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 4px 20px rgba(43, 89, 209, 0.08);
+}
+
+.pipeline-hub-badge {
+  display: inline-block;
+  background: var(--color-white);
+  color: var(--color-lake-blue);
+  border: 1px solid var(--color-ash);
+  border-radius: 9999px;
+  padding: 4px 14px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 800px) {
+  .monad-pipeline-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .funnel-svg-layer {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   Responsive Adjustments
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .dark-feature-container { grid-template-columns: 1fr; }
+  .footer-container { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 600px) {
+  .footer-container { grid-template-columns: 1fr; }
+  .dashboard-header { padding: 0 16px; }
+}
+
+/* ==========================================================================
+   Sales Navigator Industry-Standard Data Table Layout
+   ========================================================================== */
+
+.sales-nav-table-container {
+  width: 100%;
+  overflow-x: auto;
+  background: #ffffff;
+  border: 1px solid #cecac8;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.sales-nav-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: #000000;
+}
+
+.sales-nav-table th {
+  background: #f8fafc;
+  color: #475569;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 12px 16px;
+  border-bottom: 2px solid #e2e8f0;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.sales-nav-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+  transition: background 0.15s ease;
+}
+
+.sales-nav-table tr.sn-row:hover td {
+  background: #f8fafc;
+}
+
+.sales-nav-table tr.sn-row.selected td {
+  background: #ecfdf5;
+}
+
+.sn-checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: #10b981;
+  cursor: pointer;
+}
+
+.sn-lead-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 180px;
+}
+
+.sn-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #10b981;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.sn-lead-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sn-lead-name {
+  font-weight: 700;
+  color: #0f172a;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.sn-lead-name:hover {
+  color: #10b981;
+  text-decoration: underline;
+}
+
+.sn-lead-company {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.sn-platform-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.sn-platform-reddit {
+  background: #fff5f5;
+  color: #e11d48;
+  border: 1px solid #fecdd3;
+}
+
+.sn-platform-twitter {
+  background: #f0f9ff;
+  color: #0284c7;
+  border: 1px solid #bae6fd;
+}
+
+.sn-platform-hackernews {
+  background: #fff7ed;
+  color: #ea580c;
+  border: 1px solid #ffedd5;
+}
+
+.sn-platform-web {
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+.sn-signal-text {
+  color: #334155;
+  font-size: 12px;
+  line-height: 1.5;
+  max-width: 380px;
+}
+
+.sn-highlight-kw {
+  background: #dcfce7;
+  color: #15803d;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.sn-location-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #475569;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.sn-intent-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.sn-intent-high {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.sn-intent-med {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+}
+
+.sn-actions-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.sn-btn-crm {
+  background: #10b981;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.sn-btn-crm:hover {
+  opacity: 0.9;
+}
+
+.sn-btn-delete {
+  background: transparent;
+  color: #94a3b8;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.sn-btn-delete:hover {
+  color: #ef4444;
+  border-color: #fca5a5;
+  background: #fef2f2;
+}
+

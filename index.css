@@ -1,0 +1,15 @@
+/* Editorial Magazine Theme for FirstLeads Staging */
+
+@import "tailwindcss";
+
+:root {
+  --color-orange: #E45D3E;
+  --color-dark-purple: #1E1C21;
+  --color-dark-cream-bg: #F8F5F0;
+}
+
+body {
+  background-color: var(--color-dark-cream-bg) !important;
+  color: var(--color-dark-purple) !important;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}

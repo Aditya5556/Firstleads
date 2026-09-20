@@ -1,0 +1,350 @@
+/* ==========================================================================
+   Wall B2B Marketplace — Monad Design System
+   Parchment Canvas (#f6f3f1), Lake Blue CTAs (#2b59d1), Ash Borders (#cecac8)
+   ========================================================================== */
+
+:root {
+  --wall-bg: #f6f3f1;
+  --wall-card-bg: #ffffff;
+  --wall-card-hover-bg: #ffffff;
+  --wall-border: #cecac8;
+  --wall-border-hover: #2b59d1;
+  --wall-text: #242424;
+  --wall-text-sub: #4e4d4d;
+  --wall-text-muted: #797776;
+  --wall-input-bg: #ffffff;
+  --wall-modal-bg: #ffffff;
+  --wall-pill-bg: #ffffff;
+  --wall-pill-active-bg: #2b59d1;
+  --wall-pill-active-text: #ffffff;
+  --wall-shadow: none;
+}
+
+.wall-marketplace-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px;
+  background: var(--wall-bg);
+  border-radius: 16px;
+}
+
+/* Marketplace Header Row */
+.wall-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid var(--wall-border);
+  padding-bottom: 24px;
+}
+
+.wall-header-title-block {
+  flex: 1;
+  min-width: 280px;
+}
+
+.wall-title-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.wall-main-title {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--wall-text);
+  letter-spacing: -0.02em;
+}
+
+.wall-live-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #cfdaf5;
+  color: #242424;
+  border: 1px solid #cecac8;
+  font-weight: 500;
+}
+
+.wall-sub-title {
+  margin: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: var(--wall-text-sub);
+  line-height: 1.6;
+}
+
+.wall-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.wall-bid-btn {
+  background: #2b59d1;
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.2s ease;
+}
+
+.wall-bid-btn:hover {
+  opacity: 0.92;
+}
+
+.wall-ship-btn {
+  background: #cfdaf5;
+  color: #242424;
+  border: 1px solid #242424;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: opacity 0.2s ease;
+}
+
+.wall-ship-btn:hover {
+  opacity: 0.88;
+}
+
+/* Category Filter Bar */
+.wall-filter-bar {
+  margin-bottom: 32px;
+}
+
+.wall-cat-scroll-container {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.wall-filter-pill {
+  background: #ffffff;
+  color: #4e4d4d;
+  border: 1px solid #cecac8;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.wall-filter-pill.active {
+  background: #2b59d1;
+  color: #ffffff;
+  border-color: #2b59d1;
+}
+
+/* Product List */
+.wall-products-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.wall-card-item {
+  background: var(--wall-card-bg);
+  border: 1px solid var(--wall-border);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  transition: border-color 0.2s ease;
+}
+
+.wall-card-item:hover {
+  border-color: var(--wall-border-hover);
+}
+
+.wall-card-info {
+  flex: 1;
+  min-width: 260px;
+}
+
+.wall-card-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.wall-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--wall-text);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wall-card-title:hover {
+  color: #2b59d1;
+}
+
+.wall-card-rank {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #cfdaf5;
+  color: #2b59d1;
+  font-weight: 500;
+}
+
+.wall-card-tagline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: var(--wall-text-sub);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.wall-card-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.wall-btn-capture {
+  background: #2b59d1;
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.wall-btn-capture:hover {
+  opacity: 0.9;
+}
+
+.wall-btn-visit {
+  background: transparent;
+  color: #242424;
+  border: 1px solid #cecac8;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.wall-btn-visit:hover {
+  background: #cfdaf5;
+}
+
+/* Modal Overlay */
+.wall-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(36, 36, 36, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.wall-modal-card {
+  background: var(--wall-modal-bg);
+  border: 1px solid var(--wall-border);
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 520px;
+  width: 100%;
+}
+
+.wall-modal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--wall-text);
+  margin-bottom: 6px;
+}
+
+.wall-modal-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--wall-text-sub);
+  margin-bottom: 24px;
+}
+
+.wall-modal-form label {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--wall-text);
+  margin-bottom: 6px;
+}
+
+.wall-modal-form input,
+.wall-modal-form select,
+.wall-modal-form textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--wall-border);
+  background: var(--wall-bg);
+  color: var(--wall-text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+.wall-modal-submit-btn {
+  width: 100%;
+  background: #2b59d1;
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  height: 44px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.wall-modal-submit-btn:hover {
+  opacity: 0.92;
+}

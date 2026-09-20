@@ -1,0 +1,30 @@
+name: FirstLeads 24/7 Cloud Background Crawler Daemon
+
+on:
+  schedule:
+    # Run background crawler every 30 minutes for zero cost
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+jobs:
+  crawl_and_enrich:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Production Dependencies
+        run: npm ci --only=production
+
+      - name: Execute Cloud Background Crawler & Storage Purger
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          NODE_ENV: production
+        run: node scripts/cloud_worker.js

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FirstLeads AI — Monad Editorial B2B Lead Engine</title>
+  <link rel="stylesheet" href="dashboard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Pill Announcement Banner (#000000 Ink ground) -->
+  <div class="pill-announcement-banner" style="background: #000000; color: #ffffff; padding: 10px 24px; font-family: 'JetBrains Mono', monospace; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 12px;">
+    <span>⚡ Monad SaaS Engine 2.0 • Intercept high-intent B2B buyers across Reddit, Twitter & Web</span>
+    <a href="#how-it-works" class="banner-link" style="color: #ffffff; border-bottom: 1px solid #ffffff; text-decoration: none;">Learn how it works →</a>
+  </div>
+
+  <!-- Navigation Header (Sticky Blur Header backdrop-filter: blur(12px)) -->
+  <header class="dashboard-header">
+    <a href="/" class="brand" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px;">
+      <div class="brand-text">
+        <h1 style="font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 400; color: #242424;">FirstLeads</h1>
+      </div>
+    </a>
+    
+    <div style="display: flex; gap: 24px; align-items: center;">
+      <a href="#how-it-works" class="btn-ghost">How it Works</a>
+      <a href="#quotes" class="btn-ghost">Quotes</a>
+    </div>
+
+    <div class="header-actions" style="display: flex; align-items: center; gap: 16px;">
+      <a href="dashboard.html" class="btn-lake-blue" style="height: 38px; padding: 0 20px; font-size: 13px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">Launch Dashboard</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section style="padding: 80px 24px; text-align: center; max-width: 860px; margin: 0 auto;">
+    <span style="display: inline-block; background: #cfdaf5; color: #2b59d1; padding: 4px 14px; border-radius: 999px; font-size: 12px; font-weight: 500; margin-bottom: 20px; border: 1px solid #cecac8;">
+      TECHNICAL B2B DISTRIBUTION
+    </span>
+    
+    <h1 class="heading-display" style="font-family: 'Playfair Display', serif; font-size: 56px; font-weight: 400; line-height: 1.08; color: #242424; margin-bottom: 24px;">
+      Building a product is easy. Distribution is the hard part.
+    </h1>
+
+    <p class="body-text" style="font-family: 'JetBrains Mono', monospace; font-size: 16px; color: #4e4d4d; max-width: 680px; margin: 0 auto 36px auto;">
+      You wrote the code, launched on Product Hunt, and got... silence. FirstLeads closes the distribution gap on warm parchment canvas, matching active buying threads instantly.
+    </p>
+
+    <div style="display: flex; justify-content: center; gap: 16px; align-items: center; flex-wrap: wrap;">
+      <a href="dashboard.html" class="btn-lake-blue" style="height: 46px; padding: 0 28px; font-size: 14px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">
+        <span>Launch Dashboard Workspace</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </a>
+      <a href="#how-it-works" class="btn-secondary" style="height: 46px; padding: 0 24px; font-size: 14px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">Learn How it Works</a>
+    </div>
+  </section>
+
+  <!-- Main Content Container -->
+  <main class="dashboard-app" id="how-it-works">
+
+    <!-- Section Heading -->
+    <div style="text-align: center; margin-bottom: 32px;">
+      <h2 class="heading-lg" style="font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 400;">Claim your first user in minutes</h2>
+      <p class="stone-text" style="font-size: 15px; max-width: 600px; margin: 12px auto 0 auto;">Empathy-first B2B distribution engine for indie builders & SaaS teams.</p>
+    </div>
+
+    <!-- Monad Data Pipeline Flow Diagram -->
+    <div class="monad-pipeline-container" id="index-pipeline-container">
+      <div class="monad-pipeline-glow"></div>
+      <svg class="funnel-svg-layer" id="funnel-svg-index"></svg>
+      
+      <div style="text-align: center; margin-bottom: 24px; position: relative; z-index: 2;">
+        <span class="pipeline-hub-badge">IN-FLIGHT DATA TRANSFORM ENGINE</span>
+        <h3 style="font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 400; color: #242424; margin: 4px 0 8px 0;">
+          Real-Time Intent Interception Flow
+        </h3>
+        <p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #797776; margin: 0;">
+          Click any data source node to inspect live normalized buyer signals & flow paths.
+        </p>
+      </div>
+
+      <div class="monad-pipeline-grid">
+        
+        <!-- Column 1: Sources -->
+        <div class="pipeline-col">
+          <div class="pipeline-stage-title"><span>●</span> Stage 1: Ingestion</div>
+          <div class="pipeline-node active-node" onclick="selectPipelineSourceIndex('reddit', this)">
+            <div class="pipeline-node-icon">📡</div>
+            <span>Reddit /r/SaaS</span>
+          </div>
+          <div class="pipeline-node" onclick="selectPipelineSourceIndex('twitter', this)">
+            <div class="pipeline-node-icon">🐦</div>
+            <span>Twitter / X Intent</span>
+          </div>
+          <div class="pipeline-node" onclick="selectPipelineSourceIndex('hackernews', this)">
+            <div class="pipeline-node-icon">⚡</div>
+            <span>Hacker News Ask HN</span>
+          </div>
+          <div class="pipeline-node" onclick="selectPipelineSourceIndex('web', this)">
+            <div class="pipeline-node-icon">🎯</div>
+            <span>B2B Web Crawls</span>
+          </div>
+        </div>
+
+        <!-- Column 2: Central Engine Hub -->
+        <div class="pipeline-col">
+          <div class="pipeline-stage-title" style="justify-content: center;"><span>●</span> Stage 2: AI Normalization</div>
+          <div class="pipeline-hub-card">
+            <span class="pipeline-hub-badge">98% MATCH PRECISION</span>
+            <h4 id="flow-source-title" style="font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 400; color: #242424; margin-bottom: 8px;">
+              Reddit /r/SaaS Intent Flow
+            </h4>
+            <p id="flow-source-desc" style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #4e4d4d; line-height: 1.5; margin-bottom: 16px;">
+              "Looking for an automated PDF editor & OCR tool for our startup team..."
+            </p>
+            <div style="background: #ffffff; border: 1px solid #cecac8; border-radius: 9999px; padding: 6px 16px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #2b59d1; font-weight: 500; display: inline-flex; align-items: center; gap: 6px;">
+              <span>✨</span> Auto-Drafting Organic Pitch...
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 3: Destinations -->
+        <div class="pipeline-col">
+          <div class="pipeline-stage-title"><span>●</span> Stage 3: Outreach</div>
+          <div class="pipeline-node" style="border-color: #2b59d1; background: #cfdaf5;">
+            <div class="pipeline-node-icon" style="color: #2b59d1;">✉️</div>
+            <span>Organic AI Pitch</span>
+          </div>
+          <div class="pipeline-node">
+            <div class="pipeline-node-icon">💼</div>
+            <span>Wall B2B Feature</span>
+          </div>
+          <div class="pipeline-node">
+            <div class="pipeline-node-icon">📊</div>
+            <span>Outreach CRM Sync</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Feature Grid -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-bottom: 64px;">
+      
+      <div style="background: #ffffff; border: 1px solid #cecac8; border-radius: 16px; padding: 32px;">
+        <span class="caption" style="color: #2b59d1; font-weight: 600; text-transform: uppercase;">01 • The Code is Ready</span>
+        <h3 class="heading-sm" style="font-family: 'Playfair Display', serif; font-size: 22px; margin: 12px 0 8px 0;">You built the product</h3>
+        <p class="stone-text">You spent months creating the perfect SaaS, extension, or store. But launching into a quiet room won't bring you customers.</p>
+      </div>
+
+      <div style="background: #ffffff; border: 1px solid #cecac8; border-radius: 16px; padding: 32px;">
+        <span class="caption" style="color: #2b59d1; font-weight: 600; text-transform: uppercase;">02 • The Hard Part</span>
+        <h3 class="heading-sm" style="font-family: 'Playfair Display', serif; font-size: 22px; margin: 12px 0 8px 0;">Distribution is a wall</h3>
+        <p class="stone-text">Cold emails bounce, Google ads cost thousands, and spamming forums gets you banned. Finding high-intent buyers manually takes hundreds of hours.</p>
+      </div>
+
+      <div style="background: #ffffff; border: 1px solid #cecac8; border-radius: 16px; padding: 32px;">
+        <span class="caption" style="color: #2b59d1; font-weight: 600; text-transform: uppercase;">03 • The Solution</span>
+        <h3 class="heading-sm" style="font-family: 'Playfair Display', serif; font-size: 22px; margin: 12px 0 8px 0;">Direct active pipeline</h3>
+        <p class="stone-text">FirstLeads AI connects the dots. We scout the internet for users begging for your exact solution, auto-draft organic responses, and help you land your first customer.</p>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Monad Periwinkle Storytelling Band -->
+  <section class="dark-feature-band" id="quotes">
+    <div class="dark-feature-container">
+      <div class="dark-feature-art">
+        <div class="art-card art-1">
+          <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #2b59d1; margin-bottom: 6px;">The Hard Truth</div>
+          <div style="font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 400;">"First-time founders focus on product. Second-time founders focus on distribution."</div>
+          <div style="font-size: 11px; opacity: 0.7; margin-top: 8px;">— Justin Kan, Twitch</div>
+        </div>
+        <div class="art-card art-2">
+          <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #2b59d1; margin-bottom: 6px;">Zero to One</div>
+          <div style="font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 400;">"Poor distribution—not product—is the #1 cause of failure."</div>
+          <div style="font-size: 11px; opacity: 0.7; margin-top: 8px;">— Peter Thiel</div>
+        </div>
+      </div>
+
+      <div class="dark-feature-content">
+        <h2>Engineered for teams who refuse to compromise on distribution.</h2>
+        <p>
+          FirstLeads combines real-time Web Scraping, AI Intent Matching, and direct B2B Wall Marketplace positioning to make customer acquisition predictable.
+        </p>
+        <a href="dashboard.html" class="btn-dark-outlined" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">
+          <span>Unlock Dashboard Workspace</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Full-Bleed Midnight Footer (#000000 Ink ground) -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <h3>FirstLeads</h3>
+        <p>Empathy-first SaaS distribution engine intercepting high-intent buyers across web & social channels.</p>
+      </div>
+      
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="dashboard.html">Lead Interceptor</a></li>
+          <li><a href="dashboard.html">B2B Wall Marketplace</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Monad Design System</a></li>
+          <li><a href="#">Distribution Playbook</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About FirstLeads</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Security</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const pipelineDataIndex = {
+      reddit: {
+        title: "Reddit /r/SaaS Intent Flow",
+        desc: '"Looking for an automated PDF editor & OCR tool for our startup team..."'
+      },
+      twitter: {
+        title: "Twitter / X Buying Intent Flow",
+        desc: '"Anyone know a good B2B lead generation tool that isn\'t spammy?"'
+      },
+      hackernews: {
+        title: "Hacker News Ask HN Flow",
+        desc: '"Ask HN: What is the best lightweight PDF editing & OCR engine for web apps?"'
+      },
+      web: {
+        title: "B2B Web Crawls Signal Flow",
+        desc: '"Direct website audit & extracted buyer problem keywords."'
+      }
+    };
+
+    function selectPipelineSourceIndex(key, el) {
+      const container = document.getElementById('index-pipeline-container');
+      if (!container) return;
+      container.querySelectorAll('.pipeline-col:first-child .pipeline-node').forEach(n => n.classList.remove('active-node'));
+      if (el) el.classList.add('active-node');
+      const item = pipelineDataIndex[key];
+      if (item) {
+        document.getElementById('flow-source-title').innerText = item.title;
+        document.getElementById('flow-source-desc').innerText = item.desc;
+      }
+      drawSvgFlowPaths('index-pipeline-container', 'funnel-svg-index');
+    }
+
+    function drawSvgFlowPaths(containerId, svgId) {
+      const container = document.getElementById(containerId);
+      const svg = document.getElementById(svgId);
+      if (!container || !svg) return;
+
+      const containerRect = container.getBoundingClientRect();
+      if (containerRect.width === 0) return;
+
+      svg.setAttribute('viewBox', `0 0 ${containerRect.width} ${containerRect.height}`);
+
+      const sourceNodes = container.querySelectorAll('.pipeline-col:first-child .pipeline-node');
+      const hubNode = container.querySelector('.pipeline-hub-card');
+      const destNodes = container.querySelectorAll('.pipeline-col:last-child .pipeline-node');
+
+      if (!hubNode || !sourceNodes.length || !destNodes.length) return;
+
+      const hubRect = hubNode.getBoundingClientRect();
+      const hubLeftX = hubRect.left - containerRect.left;
+      const hubRightX = hubRect.right - containerRect.left;
+      const hubMidY = hubRect.top + hubRect.height / 2 - containerRect.top;
+
+      let pathsHtml = '';
+
+      sourceNodes.forEach((node) => {
+        const nodeRect = node.getBoundingClientRect();
+        const startX = nodeRect.right - containerRect.left;
+        const startY = nodeRect.top + nodeRect.height / 2 - containerRect.top;
+        const endX = hubLeftX;
+        const endY = hubMidY;
+
+        const isActive = node.classList.contains('active-node');
+        const strokeColor = isActive ? '#2b59d1' : '#cecac8';
+        const strokeWidth = isActive ? 2.5 : 1.5;
+        const strokeDash = isActive ? 'stroke-dasharray: 8 4; animation: flowDash 1.2s linear infinite;' : 'stroke-dasharray: 4 4; opacity: 0.5;';
+
+        const controlX1 = startX + (endX - startX) * 0.5;
+        const controlY1 = startY;
+        const controlX2 = startX + (endX - startX) * 0.5;
+        const controlY2 = endY;
+
+        pathsHtml += `<path d="M ${startX} ${startY} C ${controlX1} ${controlY1}, ${controlX2} ${controlY2}, ${endX} ${endY}" 
+                          fill="none" stroke="${strokeColor}" stroke-width="${strokeWidth}" style="${strokeDash}" />`;
+      });
+
+      destNodes.forEach((node) => {
+        const nodeRect = node.getBoundingClientRect();
+        const startX = hubRightX;
+        const startY = hubMidY;
+        const endX = nodeRect.left - containerRect.left;
+        const endY = nodeRect.top + nodeRect.height / 2 - containerRect.top;
+
+        const controlX1 = startX + (endX - startX) * 0.5;
+        const controlY1 = startY;
+        const controlX2 = startX + (endX - startX) * 0.5;
+        const controlY2 = endY;
+
+        pathsHtml += `<path d="M ${startX} ${startY} C ${controlX1} ${controlY1}, ${controlX2} ${controlY2}, ${endX} ${endY}" 
+                          fill="none" stroke="#2b59d1" stroke-width="1.5" style="stroke-dasharray: 6 4; opacity: 0.7; animation: flowDash 1.6s linear infinite;" />`;
+      });
+
+      svg.innerHTML = pathsHtml;
+    }
+
+    window.addEventListener('load', () => {
+      drawSvgFlowPaths('index-pipeline-container', 'funnel-svg-index');
+    });
+    window.addEventListener('resize', () => {
+      drawSvgFlowPaths('index-pipeline-container', 'funnel-svg-index');
+    });
+  </script>
+</body>
+</html>
