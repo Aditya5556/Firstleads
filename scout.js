@@ -923,7 +923,12 @@ function searchGitHubQuery(query) {
   });
 }
 
-const { GoogleDecoder } = require('google-news-url-decoder');
+let GoogleDecoder = null;
+try {
+  GoogleDecoder = require('google-news-url-decoder').GoogleDecoder;
+} catch (e) {
+  console.warn('[Decoder Warning] google-news-url-decoder package optional fallback enabled.');
+}
 
 function classifyIntent(title, selftext) {
   const text = (title + ' ' + (selftext || '')).toLowerCase();
