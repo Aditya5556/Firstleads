@@ -134,7 +134,7 @@ const server = http.createServer(async (req, res) => {
     req.on('end', async () => {
       try {
         const payload = JSON.parse(body);
-        let { name, tagline, url: prodUrl, logo, category, country, pricing, twitter } = payload;
+        let { name, tagline, url: prodUrl, logo, category, country, pricing, twitter, description } = payload;
         if (!name || !tagline || !prodUrl) {
           res.writeHead(400, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({ error: 'Name, tagline, and website URL are required.' }));
@@ -149,6 +149,7 @@ const server = http.createServer(async (req, res) => {
           id: `prod-${Date.now()}`,
           name,
           tagline,
+          description: description || tagline,
           url: prodUrl,
           logo: logo || null,
           category: category || 'SaaS',
@@ -171,9 +172,10 @@ const server = http.createServer(async (req, res) => {
         products.unshift(newProduct);
         fs.writeFileSync(productsPath, JSON.stringify(products, null, 2));
 
-        // Sync with Supabase if available
+        // Sync with Supabase products and products_wall if available
         if (supabase) {
           try {
+            const userEmail = getCookie(req, 'firstleads_auth') || 'anonymous';
             await supabase.from('products').insert([{
               id: newProduct.id,
               name: newProduct.name,
@@ -188,6 +190,18 @@ const server = http.createServer(async (req, res) => {
               clicks: 0,
               leads_captured: 0
             }]);
+
+            // Also insert into public products_wall directory table
+            await supabase.from('products_wall').insert([{
+              product_name: newProduct.name,
+              website_url: newProduct.url,
+              logo_url: newProduct.logo,
+              tagline: newProduct.tagline,
+              description: newProduct.description,
+              category: newProduct.category,
+              is_featured: true,
+              is_active: true
+            }]);
           } catch (e) {
             console.error('Supabase product insert error:', e.message);
           }
@@ -200,6 +214,101 @@ const server = http.createServer(async (req, res) => {
         res.end(JSON.stringify({ error: e.message }));
       }
     });
+    return;
+  }
+
+  if (url === '/api/wall/connect' && method === 'POST') {
+    let body = '';
+    req.on('data', chunk => { body += chunk; });
+    req.on('end', async () => {
+      try {
+        const { productId, visitorName, visitorEmail, visitorCompany, visitorRole, message } = JSON.parse(body || '{}');
+        if (!productId || !visitorName || !visitorEmail) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'Product ID, name, and email are required.' }));
+          return;
+        }
+
+        const inboundLead = {
+          id: `inbound-${Date.now()}`,
+          productId,
+          visitorName,
+          visitorEmail,
+          visitorCompany: visitorCompany || '',
+          visitorRole: visitorRole || '',
+          message: message || '',
+          createdAt: new Date().toISOString()
+        };
+
+        // Write to local disk inbound_leads.json
+        const inboundPath = path.join(__dirname, 'inbound_leads.json');
+        let inbounds = [];
+        if (fs.existsSync(inboundPath)) {
+          try { inbounds = JSON.parse(fs.readFileSync(inboundPath, 'utf8')); } catch (e) { inbounds = []; }
+        }
+        inbounds.unshift(inboundLead);
+        fs.writeFileSync(inboundPath, JSON.stringify(inbounds, null, 2));
+
+        // Increment leads_captured on local products.json
+        const productsPath = path.join(__dirname, 'products.json');
+        if (fs.existsSync(productsPath)) {
+          try {
+            let products = JSON.parse(fs.readFileSync(productsPath, 'utf8'));
+            const prod = products.find(p => p.id === productId);
+            if (prod) {
+              prod.leadsCaptured = (prod.leadsCaptured || 0) + 1;
+              fs.writeFileSync(productsPath, JSON.stringify(products, null, 2));
+            }
+          } catch (e) {}
+        }
+
+        // Sync with Supabase inbound_leads if available
+        if (supabase) {
+          try {
+            await supabase.from('inbound_leads').insert([{
+              product_id: productId.startsWith('prod-') ? null : productId,
+              visitor_name: visitorName,
+              visitor_email: visitorEmail,
+              visitor_company: visitorCompany || '',
+              visitor_role: visitorRole || '',
+              message: message || ''
+            }]);
+          } catch (e) {
+            console.error('Supabase inbound lead insert error:', e.message);
+          }
+        }
+
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: true, inboundLead }));
+      } catch (e) {
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: e.message }));
+      }
+    });
+    return;
+  }
+
+  if (url === '/api/leads/inbound' && method === 'GET') {
+    const inboundPath = path.join(__dirname, 'inbound_leads.json');
+    let inbounds = [];
+
+    if (supabase) {
+      try {
+        const { data, error } = await supabase.from('inbound_leads').select('*').order('created_at', { ascending: false });
+        if (!error && data && data.length > 0) {
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify(data));
+          return;
+        }
+      } catch (e) {}
+    }
+
+    if (fs.existsSync(inboundPath)) {
+      try { inbounds = JSON.parse(fs.readFileSync(inboundPath, 'utf8')); } catch (e) { inbounds = []; }
+    }
+
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(inbounds));
     return;
   }
 

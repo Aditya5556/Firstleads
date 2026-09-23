@@ -426,7 +426,7 @@
     if (modal) modal.style.display = 'none';
   };
 
-  window.handleWallLeadSubmit = function (e) {
+  window.handleWallLeadSubmit = async function (e) {
     e.preventDefault();
     const prodId = document.getElementById('lead-prod-id').value;
     const prodName = document.getElementById('lead-prod-name').value;
@@ -437,14 +437,31 @@
 
     if (!name || !email) return;
 
-    // Increment lead counter on Wall
+    // Increment lead counter on Wall UI
     const prod = window.wallProducts.find(p => p.id === prodId);
     if (prod) {
       prod.leadsCaptured = (prod.leadsCaptured || 0) + 1;
       window.renderWallMarketplace();
     }
 
-    // Sync lead into Outreach CRM
+    try {
+      await fetch('/api/wall/connect', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          productId: prodId,
+          visitorName: name,
+          visitorEmail: email,
+          visitorCompany: company,
+          visitorRole: '',
+          message: message
+        })
+      });
+    } catch (err) {
+      console.warn('Wall connect post warning:', err.message);
+    }
+
+    // Sync lead into Outreach CRM if available locally
     if (window.syncWallLeadToCrm) {
       window.syncWallLeadToCrm({
         id: `wall-lead-${Date.now()}`,
@@ -460,7 +477,7 @@
 
     window.closeWallLeadModal();
     document.getElementById('wall-lead-capture-form').reset();
-    alert(`Lead Captured!\n\nName: ${name}\nEmail: ${email}\nCompany: ${company || 'N/A'}\nProduct: "${prodName}"\n\nSaved & synced directly into your Outreach CRM tab!`);
+    alert(`Lead Captured Successfully!\n\nName: ${name}\nEmail: ${email}\nCompany: ${company || 'N/A'}\nProduct: "${prodName}"\n\nDelivered directly to the founder's lead inbox!`);
   };
 
   window.fetchProductsFromBackend = async function () {

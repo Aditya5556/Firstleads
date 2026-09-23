@@ -8,6 +8,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- 2. User Campaigns Table (Stores User ICP & Vector Triggers)
 CREATE TABLE IF NOT EXISTS public.user_campaigns (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
     user_email VARCHAR(255) NOT NULL,
     product_name VARCHAR(255) NOT NULL,
     product_url TEXT,
@@ -17,7 +18,7 @@ CREATE TABLE IF NOT EXISTS public.user_campaigns (
     location_city VARCHAR(100) DEFAULT '',
     keywords TEXT[] DEFAULT '{}',
     embedding vector(384),
-    daily_quota INT DEFAULT 25,
+    weekly_quota INT DEFAULT 40,
     status VARCHAR(50) DEFAULT 'active',
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
@@ -25,11 +26,12 @@ CREATE TABLE IF NOT EXISTS public.user_campaigns (
 -- 3. Production Crawled B2B Leads Table (Metadata-Only Lean Storage)
 CREATE TABLE IF NOT EXISTS public.leads (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
     campaign_id UUID REFERENCES public.user_campaigns(id) ON DELETE CASCADE,
     platform VARCHAR(50) NOT NULL,
     title TEXT NOT NULL,
     description TEXT,
-    url TEXT UNIQUE NOT NULL,
+    url TEXT NOT NULL,
     author VARCHAR(120),
     region VARCHAR(120) DEFAULT 'Global',
     query VARCHAR(150),
@@ -45,7 +47,8 @@ CREATE TABLE IF NOT EXISTS public.leads (
     connected BOOLEAN DEFAULT FALSE,
     kanban_stage VARCHAR(50) DEFAULT 'new',
     embedding vector(384),
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+    CONSTRAINT unique_user_lead_url UNIQUE (user_id, url)
 );
 
 -- 4. Fast Vector Index for Instant Cosine Similarity Distance Matching
@@ -53,7 +56,37 @@ CREATE INDEX IF NOT EXISTS leads_embedding_idx ON public.leads USING ivfflat (em
 CREATE INDEX IF NOT EXISTS leads_created_at_idx ON public.leads (created_at DESC);
 CREATE INDEX IF NOT EXISTS leads_url_idx ON public.leads (url);
 
--- 5. Crawler Execution Logs Table
+-- 5. Product Wall Directory Table (Wayb-Style Listing)
+CREATE TABLE IF NOT EXISTS public.products_wall (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+    product_name VARCHAR(255) NOT NULL,
+    website_url TEXT NOT NULL,
+    logo_url TEXT,
+    tagline VARCHAR(255) NOT NULL,
+    description TEXT,
+    category VARCHAR(100) DEFAULT 'AI & B2B Tools',
+    is_featured BOOLEAN DEFAULT true,
+    is_active BOOLEAN DEFAULT true,
+    upvotes INT DEFAULT 0,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+    expires_at TIMESTAMP WITH TIME ZONE DEFAULT (timezone('utc'::text, now()) + INTERVAL '7 days')
+);
+
+-- 6. Inbound Leads from Product Wall Connect Table
+CREATE TABLE IF NOT EXISTS public.inbound_leads (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    product_id UUID REFERENCES public.products_wall(id) ON DELETE CASCADE,
+    seller_user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+    visitor_name VARCHAR(255) NOT NULL,
+    visitor_email VARCHAR(255) NOT NULL,
+    visitor_company VARCHAR(255),
+    visitor_role VARCHAR(150),
+    message TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- 7. Crawler Execution Logs Table
 CREATE TABLE IF NOT EXISTS public.crawler_logs (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     daemon_id VARCHAR(100) DEFAULT 'cloud-daemon-1',
@@ -65,7 +98,19 @@ CREATE TABLE IF NOT EXISTS public.crawler_logs (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
--- 6. Stored Procedure: 30-Day TTL Auto-Purge Function (Keeps DB Lean & Fast)
+-- 8. Row Level Security Policies (Supabase Auth Data Isolation)
+ALTER TABLE public.user_campaigns ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.leads ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.products_wall ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.inbound_leads ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Users access own campaigns" ON public.user_campaigns FOR ALL USING (auth.uid() = user_id OR user_id IS NULL);
+CREATE POLICY "Users access own leads" ON public.leads FOR ALL USING (auth.uid() = user_id OR user_id IS NULL);
+CREATE POLICY "Public reads active products" ON public.products_wall FOR SELECT USING (is_active = true);
+CREATE POLICY "Owners manage product listing" ON public.products_wall FOR ALL USING (auth.uid() = user_id OR user_id IS NULL);
+CREATE POLICY "Sellers view inbound leads" ON public.inbound_leads FOR SELECT USING (auth.uid() = seller_user_id OR seller_user_id IS NULL);
+
+-- 9. Stored Procedure: 30-Day TTL Auto-Purge Function (Keeps DB Lean & Fast)
 CREATE OR REPLACE FUNCTION purge_expired_leads(max_days INT DEFAULT 30)
 RETURNS INT AS $$
 DECLARE
