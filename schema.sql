@@ -110,7 +110,16 @@ CREATE POLICY "Public reads active products" ON public.products_wall FOR SELECT 
 CREATE POLICY "Owners manage product listing" ON public.products_wall FOR ALL USING (auth.uid() = user_id OR user_id IS NULL);
 CREATE POLICY "Sellers view inbound leads" ON public.inbound_leads FOR SELECT USING (auth.uid() = seller_user_id OR seller_user_id IS NULL);
 
--- 9. Stored Procedure: 30-Day TTL Auto-Purge Function (Keeps DB Lean & Fast)
+-- 9. Explicit Table Grants for Supabase Data API (October 30 Security Policy Compliance)
+GRANT ALL ON TABLE public.user_campaigns TO anon, authenticated, service_role;
+GRANT ALL ON TABLE public.leads TO anon, authenticated, service_role;
+GRANT ALL ON TABLE public.products_wall TO anon, authenticated, service_role;
+GRANT ALL ON TABLE public.inbound_leads TO anon, authenticated, service_role;
+GRANT ALL ON TABLE public.crawler_logs TO anon, authenticated, service_role;
+
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO anon, authenticated, service_role;
+
+-- 10. Stored Procedure: 30-Day TTL Auto-Purge Function (Keeps DB Lean & Fast)
 CREATE OR REPLACE FUNCTION purge_expired_leads(max_days INT DEFAULT 30)
 RETURNS INT AS $$
 DECLARE
