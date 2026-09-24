@@ -98,28 +98,49 @@ CREATE TABLE IF NOT EXISTS public.crawler_logs (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
--- 8. Row Level Security Policies (Supabase Auth Data Isolation)
+-- 8. Legacy Products Marketplace Table
+CREATE TABLE IF NOT EXISTS public.products (
+    id TEXT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    tagline VARCHAR(255) NOT NULL,
+    url TEXT NOT NULL,
+    logo TEXT,
+    category VARCHAR(100) DEFAULT 'SaaS',
+    country VARCHAR(100) DEFAULT 'Global',
+    pricing VARCHAR(50) DEFAULT 'Freemium',
+    twitter VARCHAR(100) DEFAULT '',
+    bid_score INT DEFAULT 0,
+    clicks INT DEFAULT 0,
+    leads_captured INT DEFAULT 0,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- 9. Row Level Security Policies (Supabase Auth Data Isolation)
 ALTER TABLE public.user_campaigns ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.leads ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.products_wall ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.inbound_leads ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Users access own campaigns" ON public.user_campaigns FOR ALL USING (auth.uid() = user_id OR user_id IS NULL);
 CREATE POLICY "Users access own leads" ON public.leads FOR ALL USING (auth.uid() = user_id OR user_id IS NULL);
 CREATE POLICY "Public reads active products" ON public.products_wall FOR SELECT USING (is_active = true);
 CREATE POLICY "Owners manage product listing" ON public.products_wall FOR ALL USING (auth.uid() = user_id OR user_id IS NULL);
 CREATE POLICY "Sellers view inbound leads" ON public.inbound_leads FOR SELECT USING (auth.uid() = seller_user_id OR seller_user_id IS NULL);
+CREATE POLICY "Public reads products" ON public.products FOR SELECT USING (true);
+CREATE POLICY "Public inserts products" ON public.products FOR INSERT WITH CHECK (true);
 
--- 9. Explicit Table Grants for Supabase Data API (October 30 Security Policy Compliance)
+-- 10. Explicit Table Grants for Supabase Data API (October 30 Security Policy Compliance)
 GRANT ALL ON TABLE public.user_campaigns TO anon, authenticated, service_role;
 GRANT ALL ON TABLE public.leads TO anon, authenticated, service_role;
 GRANT ALL ON TABLE public.products_wall TO anon, authenticated, service_role;
 GRANT ALL ON TABLE public.inbound_leads TO anon, authenticated, service_role;
 GRANT ALL ON TABLE public.crawler_logs TO anon, authenticated, service_role;
+GRANT ALL ON TABLE public.products TO anon, authenticated, service_role;
 
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO anon, authenticated, service_role;
 
--- 10. Stored Procedure: 30-Day TTL Auto-Purge Function (Keeps DB Lean & Fast)
+-- 11. Stored Procedure: 30-Day TTL Auto-Purge Function (Keeps DB Lean & Fast)
 CREATE OR REPLACE FUNCTION purge_expired_leads(max_days INT DEFAULT 30)
 RETURNS INT AS $$
 DECLARE
