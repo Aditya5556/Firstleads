@@ -115,20 +115,32 @@ CREATE TABLE IF NOT EXISTS public.products (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
--- 9. Row Level Security Policies (Supabase Auth Data Isolation)
+-- 9. Row Level Security Policies (Supabase Auth Data Isolation & Daemon Support)
 ALTER TABLE public.user_campaigns ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.leads ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.products_wall ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.inbound_leads ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.crawler_logs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Users access own campaigns" ON public.user_campaigns FOR ALL USING (auth.uid() = user_id OR user_id IS NULL);
-CREATE POLICY "Users access own leads" ON public.leads FOR ALL USING (auth.uid() = user_id OR user_id IS NULL);
-CREATE POLICY "Public reads active products" ON public.products_wall FOR SELECT USING (is_active = true);
-CREATE POLICY "Owners manage product listing" ON public.products_wall FOR ALL USING (auth.uid() = user_id OR user_id IS NULL);
-CREATE POLICY "Sellers view inbound leads" ON public.inbound_leads FOR SELECT USING (auth.uid() = seller_user_id OR seller_user_id IS NULL);
-CREATE POLICY "Public reads products" ON public.products FOR SELECT USING (true);
-CREATE POLICY "Public inserts products" ON public.products FOR INSERT WITH CHECK (true);
+DROP POLICY IF EXISTS "Users access own campaigns" ON public.user_campaigns;
+DROP POLICY IF EXISTS "Users access own leads" ON public.leads;
+DROP POLICY IF EXISTS "Public reads active products" ON public.products_wall;
+DROP POLICY IF EXISTS "Owners manage product listing" ON public.products_wall;
+DROP POLICY IF EXISTS "Sellers view inbound leads" ON public.inbound_leads;
+DROP POLICY IF EXISTS "Public reads products" ON public.products;
+DROP POLICY IF EXISTS "Public inserts products" ON public.products;
+
+CREATE POLICY "Enable read for users own leads" ON public.leads FOR SELECT USING (auth.uid() = user_id OR user_id IS NULL);
+CREATE POLICY "Enable insert for all leads" ON public.leads FOR INSERT WITH CHECK (true);
+CREATE POLICY "Enable update for users own leads" ON public.leads FOR UPDATE USING (auth.uid() = user_id OR user_id IS NULL);
+CREATE POLICY "Enable delete for users own leads" ON public.leads FOR DELETE USING (auth.uid() = user_id OR user_id IS NULL);
+
+CREATE POLICY "Enable all for user_campaigns" ON public.user_campaigns FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Enable all for products_wall" ON public.products_wall FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Enable all for inbound_leads" ON public.inbound_leads FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Enable all for crawler_logs" ON public.crawler_logs FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Enable all for products" ON public.products FOR ALL USING (true) WITH CHECK (true);
 
 -- 10. Explicit Table Grants for Supabase Data API (October 30 Security Policy Compliance)
 GRANT ALL ON TABLE public.user_campaigns TO anon, authenticated, service_role;
